@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='employee.css') }}" />
+{% endblock %}
+
+{% block main_content %}
+
+<header>
+  <h1>Welcome, {{ user.firstName }} {{ user.lastName }}</h1>
+  <p>
+    {{ team.name }} |
+    {% if shift_start %}
+      Shift {{ shift_start }} – {{ shift_end }}
+    {% else %}
+      No shift today
+    {% endif %}
+  </p>
+  <p><strong>Your role: {{ user.role|replace("_", " ")|title }}</strong></p>
+</header>
+
+<!-- Next flight -->
+<section>
+  <h2>Next flight</h2>
+  {% if next_flight %}
+    <h3>{{ next_flight.flightNumber }}</h3>
+    <p>{{ next_flight.airline }} · from {{ next_flight.origin }}</p>
+    <ul>
+      <li>Arrives: {{ next_flight.scheduledArrival }}</li>
+      <li>Departs: {{ next_flight.scheduledDeparture }}</li>
+      <li>Stand: {{ next_flight.stand or "TBC" }}</li>
+      <li>Status: {{ next_flight.status|replace("_", " ")|title }}</li>
+    </ul>
+  {% else %}
+    <p>No more flights today.</p>
+  {% endif %}
+</section>
+
+<!-- Today's roster -->
+<section>
+  <h2>Today's roster</h2>
+  <p>{{ roster_total }} on shift · {{ roster_available }} available · {{ roster_sick }} sick</p>
+  <ul>
+    {% for person in roster %}
+      <li>
+        <strong>{{ person.name }}</strong> – {{ person.role|replace("_", " ")|title }} –
+        {% if person.status == "sick" %}
+          Sick
+        {% else %}
+          Available
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+
+<nav>
+  <button type="button" onclick="showTab('team')">My Team</button>
+  <button type="button" onclick="showTab('today')">Today</button>
+  <button type="button" onclick="showTab('all')">All Flights</button>
+</nav>
+
+<!-- My Team -->
+<section id="team">
+  <h2>My Team</h2>
+  <p>{{ team_ready }} of {{ team_size }} team members ready</p>
+  <ul>
+    {% for member in team.members %}
+      <li>
+        <strong>{{ member.name }}</strong>
+        ({{ member.role|replace("_", " ")|title }})
+        <br>
+        Skills:
+        {% for skill in member.skills %}
+          {{ skill }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        <br>
+        Status:
+        {% if member.status == "ready" %}
+          Ready
+        {% elif member.status == "delayed" %}
+          Delayed
+        {% elif member.status == "sick" %}
+          Sick
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- Today (my team's flights) -->
+<section id="today" hidden>
+  <h2>Today</h2>
+  <table>
+    <tr>
+      <th>Time</th>
+      <th>Flight</th>
+      <th>From</th>
+      <th>Departs</th>
+      <th>Stand</th>
+      <th>Status</th>
+    </tr>
+    {% for flight in my_flights %}
+      <tr>
+        <td>{{ flight.scheduledArrival }}</td>
+        <td>{{ flight.flightNumber }}</td>
+        <td>{{ flight.origin }}</td>
+        <td>{{ flight.scheduledDeparture }}</td>
+        <td>{{ flight.stand or "TBC" }}</td>
+        <td>{{ flight.status|replace("_", " ")|title }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</section>
+
+<!-- All flights -->
+<section id="all" hidden>
+  <h2>All Flights</h2>
+  <table>
+    <tr>
+      <th>Arrives</th>
+      <th>Flight</th>
+      <th>From</th>
+      <th>Stand</th>
+      <th>Team</th>
+      <th>Status</th>
+    </tr>
+    {% for flight in all_flights %}
+      <tr>
+        <td>{{ flight.scheduledArrival }}</td>
+        <td>{{ flight.flightNumber }}</td>
+        <td>{{ flight.origin }}</td>
+        <td>{{ flight.stand or "TBC" }}</td>
+        <td>
+          {% if flight.team_name %}
+            {{ flight.team_name }}
+          {% else %}
+            Unassigned
+          {% endif %}
+        </td>
+        <td>{{ flight.status|replace("_", " ")|title }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</section>
+
+<!-- Shows chosen tab and hides other two -->
+<script>
+  function showTab(name) {
+    document.getElementById('team').hidden = true;
+    document.getElementById('today').hidden = true;
+    document.getElementById('all').hidden = true;
+    document.getElementById(name).hidden = false;
+  }
+</script>
+
+{% endblock %}

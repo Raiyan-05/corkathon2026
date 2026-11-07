@@ -1,0 +1,90 @@
+/* supervisor.css - supervisor page.
+   Header band and cards come from base.css. This file lays them out.
+   Sections in order: 1 overview, 2 flights, 3 unassigned staff, 4 staff today. */
+
+body {
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Wide tables scroll sideways inside their card on small screens */
+body > section {
+  overflow-x: auto;
+}
+
+/* 1. Overview: one tile per figure */
+body > section:nth-of-type(1) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+
+body > section:nth-of-type(1) li {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary-2);
+  border-radius: 10px;
+  background: var(--bg);
+  font-weight: 650;
+}
+
+/* Unassigned flights and delays stand out */
+body > section:nth-of-type(1) li:nth-child(3) {
+  border-left-color: var(--warn);
+}
+
+body > section:nth-of-type(1) li:nth-child(4) {
+  border-left-color: var(--bad);
+}
+
+/* 2. Flights: unassigned flights are the only bold text in the table */
+body > section:nth-of-type(2) td strong {
+  color: var(--bad);
+}
+
+/* 3. Unassigned staff: one card per person */
+body > section:nth-of-type(3) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
+
+body > section:nth-of-type(3) li {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+body > section:nth-of-type(3) > p {
+  color: var(--muted);
+}
+
+/* 4. Staff today: summary line, then the list in columns */
+body > section:nth-of-type(4) > p {
+  color: var(--muted);
+}
+
+body > section:nth-of-type(4) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  columns: 2 20rem;
+  column-gap: 2rem;
+}
+
+body > section:nth-of-type(4) li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+  break-inside: avoid;
+}

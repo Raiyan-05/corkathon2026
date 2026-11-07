@@ -1,0 +1,125 @@
+/* auth.css - home, login and register pages.
+   Each page is a single centred card on the page background. */
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+/* Card shared by the forms and the home page */
+form.login,
+form.register,
+main#home {
+  width: min(100%, 26rem);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* Forms: stacked label + input pairs */
+form.login label,
+form.register label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+form.login input:not([type="submit"]):not([type="hidden"]),
+form.register input:not([type="submit"]):not([type="hidden"]) {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* The login template puts a <br> after each field; spacing comes from margins instead */
+form.login br {
+  display: none;
+}
+
+form.login input[type="submit"],
+form.register input[type="submit"] {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1rem;
+}
+
+/* Validation messages.
+   Login wraps each one in a <p>. Register prints them as bare text, so the form text
+   is red and the labels and inputs set their own colour above. */
+form.login p,
+form.register {
+  color: var(--bad);
+  font-size: 0.85rem;
+}
+
+form.login p {
+  margin: -0.65rem 0 1rem;
+}
+
+form.register input:not([type="submit"]) {
+  margin-bottom: 0.25rem;
+}
+
+/* Room between a field's error text and the next label */
+form.register label:not(:first-of-type) {
+  margin-top: 0.85rem;
+}
+
+/* Home page */
+main#home {
+  text-align: center;
+}
+
+main#home h1 {
+  margin-bottom: 0.5rem;
+}
+
+main#home > p:first-of-type {
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+}
+
+main#home p {
+  margin-bottom: 0.75rem;
+}
+
+main#home a {
+  display: block;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+main#home p:nth-of-type(2) a {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+main#home a:hover {
+  background: var(--primary-2);
+  border-color: var(--primary-2);
+  color: var(--on-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  main#home a {
+    border-color: var(--primary-2);
+    color: var(--link);
+  }
+}
+
+@media (max-width: 480px) {
+  form.login,
+  form.register,
+  main#home {
+    padding: 1.5rem 1.25rem;
+  }
+}

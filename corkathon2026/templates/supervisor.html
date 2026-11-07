@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='supervisor.css') }}" />
+{% endblock %}
+
+{% block main_content %}
+
+<header>
+  <h1>Supervisor: {{ employee.firstName }} {{ employee.lastName }}</h1>
+  <p>
+    {% if shift_start %}
+      Shift: {{ shift_start }} – {{ shift_end }}
+    {% else %}
+      No shifts today
+    {% endif %}
+  </p>
+  <p><strong>Your role: {{ employee.role|replace("_", " ")|title }}</strong></p>
+</header>
+
+<!-- Overview of flights -->
+<section>
+  <h2>Overview</h2>
+  <ul>
+    <li>Flights today: {{ flights_total }}</li>
+    <li>Teams on duty: {{ teams_total }}</li>
+    <li>Unassigned flights: {{ unassigned_total }}</li>
+    <li>Delays: {{ delays_total }}</li>
+  </ul>
+</section>
+
+
+<!-- Flights -->
+<section>
+  <h2>Flights</h2>
+  <table>
+    <tr>
+      <th>Flight</th>
+      <th>From</th>
+      <th>Arrives</th>
+      <th>Departs</th>
+      <th>Stand</th>
+      <th>Team</th>
+      <th>Status</th>
+    </tr>
+    {% for flight in flights %}
+      <tr>
+        <td>{{ flight.flightNumber }}</td>
+        <td>{{ flight.origin }}</td>
+        <td>{{ flight.scheduledArrival }}</td>
+        <td>{{ flight.scheduledDeparture }}</td>
+        <td>{{ flight.stand or "TBC" }}</td>
+        <td>
+          {% if flight.team_name %}
+            {{ flight.team_name }}
+          {% else %}
+            <strong>Unassigned</strong>
+          {% endif %}
+        </td>
+        <td>{{ flight.status|replace("_", " ")|title }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</section>
+
+
+<!-- Staff not in a team -->
+<section>
+  <h2>Unassigned staff</h2>
+  {% if unassigned_staff %}
+    <ul>
+      {% for person in unassigned_staff %}
+        <li>
+          <strong>{{ person.name }}</strong> – {{ person.role|replace("_", " ")|title }}
+          <br>
+          Skills:
+          {% for skill in person.skills %}
+            {{ skill }}{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Everyone is in a team.</p>
+  {% endif %}
+</section>
+
+
+<!-- Everyone on shift -->
+<section>
+  <h2>Staff today</h2>
+  <p>{{ roster_total }} on shift · {{ roster_available }} available · {{ roster_sick }} sick</p>
+  <ul>
+    {% for person in roster %}
+      <li>
+        <strong>{{ person.name }}</strong> – {{ person.role|replace("_", " ")|title }} –
+        {% if person.status == "sick" %}
+          Sick
+        {% else %}
+          Available
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% endblock %}

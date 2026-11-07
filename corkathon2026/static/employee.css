@@ -1,0 +1,123 @@
+/* employee.css - employee_flights page.
+   Header band and cards come from base.css. This file lays them out. */
+
+body {
+  max-width: 1100px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-content: start;
+  align-items: start;
+}
+
+/* Header, tab bar and the three tab panels span the full width.
+   "Next flight" and "Today's roster" sit side by side. */
+body > header,
+body > nav,
+body > section[id] {
+  grid-column: 1 / -1;
+}
+
+body > section[id] {
+  overflow-x: auto;
+}
+
+/* Next flight */
+body > section:nth-of-type(1) h3 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: 0.02em;
+  color: var(--primary-2);
+}
+
+body > section:nth-of-type(1) > p {
+  margin: 0.15rem 0 0.75rem;
+  color: var(--muted);
+}
+
+body > section:nth-of-type(1) ul,
+body > section:nth-of-type(2) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body > section:nth-of-type(1) li,
+body > section:nth-of-type(2) li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+body > section:nth-of-type(1) li:last-child,
+body > section:nth-of-type(2) li:last-child {
+  border-bottom: 0;
+}
+
+/* Today's roster: summary line, then a scrollable list */
+body > section:nth-of-type(2) > p {
+  color: var(--muted);
+}
+
+body > section:nth-of-type(2) ul {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+/* Tab bar */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+nav button {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+nav button:hover {
+  border-color: var(--primary-2);
+}
+
+/* The open tab is highlighted with CSS alone, by checking which panel is visible */
+body:has(#team:not([hidden])) nav button:nth-child(1),
+body:has(#today:not([hidden])) nav button:nth-child(2),
+body:has(#all:not([hidden])) nav button:nth-child(3) {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+/* My Team: one card per member */
+#team > p {
+  color: var(--muted);
+}
+
+#team ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
+
+#team li {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+#team li strong {
+  font-size: 1.05rem;
+}
+
+@media (max-width: 720px) {
+  body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

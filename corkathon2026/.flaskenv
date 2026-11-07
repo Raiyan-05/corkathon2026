@@ -1,0 +1,3 @@
+FLASK_APP=app.py
+FLASK_DEBUG=True
+Aviation_API_Key=47bc7289f3557e7576245b7e4abe1ec7

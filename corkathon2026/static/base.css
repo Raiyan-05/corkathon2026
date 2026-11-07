@@ -1,0 +1,235 @@
+/* base.css - loaded on every page through base.html.
+   Design tokens, reset, typography, buttons, form controls and tables.
+   Page-specific layout lives in auth.css, employee.css and supervisor.css. */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f2f5f9;
+  --surface: #ffffff;
+  --text: #14202e;
+  --muted: #5a6b7e;
+  --border: #d8e0ea;
+  --link: #0b5cad;
+
+  --primary: #0b3a66;
+  --primary-2: #1565a8;
+  --on-primary: #ffffff;
+  --accent: #f2a900;
+
+  --ok: #1f8a4c;
+  --warn: #b26a00;
+  --bad: #c0392b;
+
+  --radius: 12px;
+  --shadow: 0 1px 2px rgb(16 32 51 / 6%), 0 4px 14px rgb(16 32 51 / 6%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1620;
+    --surface: #152433;
+    --text: #e6edf5;
+    --muted: #93a4b7;
+    --border: #263a4f;
+    --link: #7ab8ff;
+
+    --primary: #1565a8;
+    --primary-2: #1f7ccc;
+
+    --ok: #46c27a;
+    --warn: #f0b04a;
+    --bad: #ff7b6b;
+
+    --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 14px rgb(0 0 0 / 25%);
+  }
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Elements with the hidden attribute stay hidden even when a rule sets display */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h2 {
+  font-size: 1.15rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--link);
+}
+
+strong {
+  font-weight: 650;
+}
+
+/* Buttons */
+button,
+input[type="submit"] {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--on-primary);
+  transition: filter 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  filter: brightness(1.12);
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Form controls */
+label {
+  font-weight: 600;
+}
+
+input:not([type="submit"]):not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font: inherit;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+input:not([type="submit"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-2);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  border-bottom: 1px solid var(--border);
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+tr:hover td {
+  background: color-mix(in srgb, var(--primary-2) 6%, transparent);
+}
+
+/* Page header band, used by the employee and supervisor pages */
+body > header {
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  background: linear-gradient(120deg, var(--primary), var(--primary-2));
+  color: var(--on-primary);
+  box-shadow: var(--shadow);
+}
+
+body > header h1 {
+  margin-bottom: 0.35rem;
+}
+
+body > header p {
+  margin: 0.2rem 0;
+  opacity: 0.92;
+}
+
+body > header p strong {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  font-size: 0.85rem;
+}
+
+/* Content cards, used by the employee and supervisor pages */
+body > section {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+body > section > h2 {
+  padding-left: 0.65rem;
+  border-left: 4px solid var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

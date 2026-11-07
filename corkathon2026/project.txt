@@ -1,0 +1,39 @@
+CrewOps: Airport Ground Crew Management System
+
+What does it do ?
+
+Automatically builds ground crews and matches them to arriving flights.
+Every crew has 4 people, including 1 team leader.
+Each crew covers all 4 skills: tug, belt loader, baggage and steps.
+
+How the teams are made ?
+
+The supervisor presses Generate teams & assign.
+The system uses everyone working that day who hasn’t called in sick.
+It builds crews so each one has a team leader and every skill covered.
+Each person is given the skill they’ll handle on that crew.
+
+How the flights are assigned ?
+
+Arriving flights go into a queue in order of arrival.
+Each flight goes to the crew that has been free the longest during its shift.
+Crews get a short break between flights.
+The supervisor approves each assignment, or reassigns it to another team.
+
+What will employees see ?
+
+Their next flight, with arrival time, departure time and stand.
+Their team and the skill they’re covering.
+Today’s roster and a board of all flights.
+
+What if you are late or sick ?
+
+Employees report “Running late” or “Call in sick” in the app.
+Calling in sick automatically suggests a free colleague with the same skill.
+The supervisor approves the cover with one click.
+Everyone involved gets a notification.
+
+Technologies used: 
+
+Back end: Python, Flask, SQLite
+Front end: HTML, CSS, Jinja2, JavaScript

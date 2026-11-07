@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}" />
+{% endblock %}
+
+{% block main_content %}
+
+    <form class="login" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        {% for field in [form.airport_code, form.employee_id, form.password] %}
+            {{ field.label }}
+            {{ field() }}
+            {% for error in field.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+            <br />
+        {% endfor %}
+        {{ form.submit() }}
+    </form>
+
+{% endblock %}
